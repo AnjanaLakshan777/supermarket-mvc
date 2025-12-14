@@ -4,12 +4,17 @@
  */
 package edu.self.mvc.view;
 
+import edu.self.mvc.controllers.ItemController;
+import edu.self.mvc.dto.ItemDto;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Anjana Lakshan
  */
 public class ItemForm extends javax.swing.JFrame {
-
+    
+    ItemController itemController = new ItemController();
     /**
      * Creates new form ItemForm
      */
@@ -191,7 +196,7 @@ public class ItemForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtQohActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+        saveItem();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,4 +217,19 @@ public class ItemForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtQoh;
     private javax.swing.JTextField txtUnit;
     // End of variables declaration//GEN-END:variables
+
+    private void saveItem() {
+        ItemDto itemDto = new ItemDto(
+                txtCode.getText(),
+                txtDesc.getText(),
+                txtPack.getText(),
+                Double.parseDouble(txtUnit.getText()),
+                Integer.parseInt(txtQoh.getText()));
+        try{
+            String resp = itemController.saveItem(itemDto);
+            JOptionPane.showMessageDialog(this,resp);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }
