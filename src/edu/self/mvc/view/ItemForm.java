@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  */
 public class ItemForm extends javax.swing.JFrame {
     
-    ItemController itemController = new ItemController();
+    private ItemController itemController = new ItemController();
     /**
      * Creates new form ItemForm
      */
