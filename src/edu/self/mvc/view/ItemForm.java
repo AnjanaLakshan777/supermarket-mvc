@@ -6,7 +6,9 @@ package edu.self.mvc.view;
 
 import edu.self.mvc.controllers.ItemController;
 import edu.self.mvc.dto.ItemDto;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,6 +22,7 @@ public class ItemForm extends javax.swing.JFrame {
      */
     public ItemForm() {
         initComponents();
+        loadTable();
     }
 
     /**
@@ -42,9 +45,9 @@ public class ItemForm extends javax.swing.JFrame {
         txtUnit = new javax.swing.JTextField();
         lblItemCode4 = new javax.swing.JLabel();
         txtQoh = new javax.swing.JTextField();
-        btnSave = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnSave = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblItem = new javax.swing.JTable();
 
@@ -84,17 +87,27 @@ public class ItemForm extends javax.swing.JFrame {
             }
         });
 
-        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnSave.setText("Delete");
-
-        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnUpdate.setText("Update");
-
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnDelete.setText("Save");
+        btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDeleteActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
+
+        btnSave.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
             }
         });
 
@@ -109,6 +122,11 @@ public class ItemForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblItemMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblItem);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -146,11 +164,11 @@ public class ItemForm extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, 537, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -180,9 +198,9 @@ public class ItemForm extends javax.swing.JFrame {
                         .addComponent(txtQoh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
@@ -195,8 +213,20 @@ public class ItemForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtQohActionPerformed
 
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         saveItem();
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        updateItem();
+    }//GEN-LAST:event_btnUpdateActionPerformed
+
+    private void tblItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblItemMouseClicked
+        searchItem();
+    }//GEN-LAST:event_tblItemMouseClicked
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        deleteItem();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -228,6 +258,78 @@ public class ItemForm extends javax.swing.JFrame {
         try{
             String resp = itemController.saveItem(itemDto);
             JOptionPane.showMessageDialog(this,resp);
+            loadTable();
+            clear();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void updateItem() {
+        ItemDto itemDto = new ItemDto(
+                txtCode.getText(),
+                txtDesc.getText(),txtPack.getText(),
+                Double.parseDouble(txtUnit.getText()),
+                Integer.parseInt(txtQoh.getText()));
+        try{
+            String resp = itemController.updateItem(itemDto);
+            JOptionPane.showMessageDialog(this, resp);
+            loadTable();
+            clear();
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void loadTable() {
+        String[] columns = {"Item Code","Description","Pack Size","Unit Price","Qty on Hand"};
+        DefaultTableModel dtm = new DefaultTableModel(columns,0){
+            public boolean isCellEditable(int row,int column) {
+                return false;
+            }
+        };
+        tblItem.setModel(dtm);
+        
+        try{
+            ArrayList<ItemDto> itemDtos = itemController.getAll();
+            for(ItemDto itemDto : itemDtos){
+                Object[] rowData = {itemDto.getId(),itemDto.getDesc(),itemDto.getPack(),itemDto.getUnitPrice(),itemDto.getQoh()};
+                dtm.addRow(rowData);
+            }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void clear() {
+        txtCode.setText("");
+        txtDesc.setText("");
+        txtPack.setText("");
+        txtUnit.setText("");
+        txtQoh.setText("");
+    }
+
+    private void searchItem() {
+        String itemCode = (String)tblItem.getValueAt(tblItem.getSelectedRow(),0);
+        try{
+            ItemDto itemDto = itemController.getItem(itemCode);
+            txtCode.setText(itemDto.getId());
+            txtDesc.setText(itemDto.getDesc());
+            txtPack.setText(itemDto.getPack());
+            txtUnit.setText(Double.toString(itemDto.getUnitPrice()));
+            txtQoh.setText(Integer.toString(itemDto.getQoh()));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void deleteItem() {
+        String itemCode = txtCode.getText();
+        try{
+            String resp = itemController.deleteItem(itemCode);
+            JOptionPane.showMessageDialog(this, resp);
+            loadTable();
+            clear();
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
