@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package edu.self.mvc;
+import edu.self.mvc.view.CustomerForm;
 import edu.self.mvc.view.ItemForm;
 
 /**
@@ -16,5 +17,6 @@ public class Main {
      */
     public static void main(String[] args) {
         new ItemForm().setVisible(true);
+        new CustomerForm().setVisible(true);
     }
 }
