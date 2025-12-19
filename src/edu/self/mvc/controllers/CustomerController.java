@@ -24,8 +24,8 @@ public class CustomerController {
     public String deleteCustomer(String customerId) throws ClassNotFoundException, SQLException{
         return customerModel.deleteCustomer(customerId);
     } 
-    public CustomerDto getCustomer(String itemCode) throws ClassNotFoundException, SQLException{
-        return customerModel.getCustomer(itemCode);
+    public CustomerDto getCustomer(String customerId) throws ClassNotFoundException, SQLException{
+        return customerModel.getCustomer(customerId);
     }
     public ArrayList<CustomerDto> getAll() throws ClassNotFoundException, SQLException{
         return customerModel.getAll();

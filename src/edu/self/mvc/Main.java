@@ -5,7 +5,7 @@
 package edu.self.mvc;
 import edu.self.mvc.view.CustomerForm;
 import edu.self.mvc.view.ItemForm;
-
+import edu.self.mvc.view.OrderForm;
 /**
  *
  * @author Anjana Lakshan
@@ -18,5 +18,6 @@ public class Main {
     public static void main(String[] args) {
         new ItemForm().setVisible(true);
         new CustomerForm().setVisible(true);
+        new OrderForm().setVisible(true);
     }
 }
