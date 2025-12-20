@@ -281,7 +281,7 @@ public class ItemForm extends javax.swing.JFrame {
         }
     }
 
-    private void loadTable() {
+    public void loadTable() {
         String[] columns = {"Item Code","Description","Pack Size","Unit Price","Qty on Hand"};
         DefaultTableModel dtm = new DefaultTableModel(columns,0){
             public boolean isCellEditable(int row,int column) {

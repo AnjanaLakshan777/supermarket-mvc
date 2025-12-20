@@ -8,9 +8,14 @@ import edu.self.mvc.controllers.ItemController;
 import edu.self.mvc.dto.CustomerDto;
 import edu.self.mvc.dto.ItemDto;
 import edu.self.mvc.dto.OrderDetailDto;
+import edu.self.mvc.dto.OrderDto;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.Date;
+import edu.self.mvc.controllers.OrderController;
+
 /**
  *
  * @author Anjana Lakshan
@@ -19,6 +24,8 @@ public class OrderForm extends javax.swing.JFrame {
     private CustomerController customerController = new CustomerController();
     private ItemController itemController = new ItemController();
     private ArrayList<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+    private OrderController orderController = new OrderController();
+
     /**
      * Creates new form OrderForm
      */
@@ -258,7 +265,7 @@ public class OrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_tblCartMouseClicked
 
     private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
-        // TODO add your handling code here:
+        placeOrder();
     }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
     private void txtItemCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtItemCodeActionPerformed
@@ -350,6 +357,31 @@ public class OrderForm extends javax.swing.JFrame {
         txtItemCode.setText("");
         txtQty.setText("");
         txtDiscount.setText("");
-        lblItem.setText("");
+        lblItemData.setText("");
+    }
+
+    private void placeOrder() {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setOrderId(txtId.getText());
+        orderDto.setCustId(txtCustId.getText());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String curDateStr = sdf.format(new Date());
+        orderDto.setOrderDate(curDateStr);
+        
+        try{
+            String resp = orderController.placeOrder(orderDto, orderDetailDtos);
+            JOptionPane.showMessageDialog(this, resp);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+        txtId.setText("");
+        txtCustId.setText("");
+        lblCustData.setText("");
+        clearTable();
+    }
+
+    private void clearTable() {
+        DefaultTableModel dtm = (DefaultTableModel)tblCart.getModel();
+        dtm.setRowCount(0);
     }
 }
